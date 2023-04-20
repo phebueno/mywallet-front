@@ -11,6 +11,7 @@ import Transaction from "../components/Transaction.js";
 export default function HomePage() {
   const [listaTransacoes, setListaTransacoes] = useState([]);
   const [saldo, setSaldo] = useState(0);
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
   function somarSaldo(accumulator, transacaoAtual) {
@@ -33,9 +34,10 @@ export default function HomePage() {
       .get(url, config)
       .then((res) => {
         console.log(res.data);
-        setListaTransacoes(res.data);
+        setListaTransacoes(res.data.opsUser);
+        setUser(res.data.user);
         let initialValue = 0;
-        const saldoTotal = res.data.reduce(
+        const saldoTotal = res.data.opsUser.reduce(
           (accumulator, transacaoAtual) =>
             somarSaldo(accumulator, transacaoAtual),
           initialValue
@@ -50,7 +52,7 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>Olá, {user}</h1>
         <BiExit />
       </Header>
       <TransactionsContainer>
