@@ -10,7 +10,13 @@ import Transaction from "../components/Transaction.js";
 
 export default function HomePage() {
   const [listaTransacoes, setListaTransacoes] = useState([]);
+  const [saldo, setSaldo] = useState(0);
   const navigate = useNavigate();
+
+  function somarSaldo(accumulator, transacaoAtual) {
+    let sinal = transacaoAtual.type === "entrada" ? 1 : -1;
+    return accumulator + sinal * transacaoAtual.value;
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("userAuth");
@@ -28,6 +34,13 @@ export default function HomePage() {
       .then((res) => {
         console.log(res.data);
         setListaTransacoes(res.data);
+        let initialValue = 0;
+        const saldoTotal = res.data.reduce(
+          (accumulator, transacaoAtual) =>
+            somarSaldo(accumulator, transacaoAtual),
+          initialValue
+        );
+        setSaldo(saldoTotal);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -51,10 +64,16 @@ export default function HomePage() {
           )}
         </ul>
 
-        <article>
-          <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
-        </article>
+        {listaTransacoes.length !== 0 ? (
+          <article>
+            <strong>Saldo</strong>
+            <Value color={saldo > 0 ? "entrada" : "saida"}>
+              {Math.abs(saldo).toFixed(2).toString().replace(".", ",")}
+            </Value>
+          </article>
+        ) : (
+          ""
+        )}
       </TransactionsContainer>
 
       <ButtonsContainer>
@@ -78,10 +97,10 @@ export default function HomePage() {
 
 const Aviso = styled.div`
   color: #868686;
-  text-align:center;
-  position:absolute;
+  text-align: center;
+  position: absolute;
   top: 50%;
-  left:50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 `;
 
@@ -100,7 +119,7 @@ const Header = styled.header`
   color: white;
 `;
 const TransactionsContainer = styled.article`
-position:relative;
+  position: relative;
   flex-grow: 1;
   background-color: #fff;
   color: #000;
@@ -140,5 +159,5 @@ const ButtonsContainer = styled.section`
 const Value = styled.div`
   font-size: 16px;
   text-align: right;
-  color: ${(props) => (props.color === "positivo" ? "green" : "red")};
+  color: ${(props) => (props.color === "entrada" ? "green" : "red")};
 `;

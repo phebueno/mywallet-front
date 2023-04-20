@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export default function Transaction({transacao}){
-    const {_id:idTransacao,value,description,type} = transacao;
-    console.log(transacao);
+    const {_id:idTransacao,opDate,value,description,type} = transacao;
     return(
         <ListItemContainer>
             <div>
-              <span>{idTransacao}</span>
+              <span>{opDate}</span>
               <strong>{description}</strong>
             </div>
             <Value color={type}>{value.toFixed(2).toString().replace('.',',')}</Value>
