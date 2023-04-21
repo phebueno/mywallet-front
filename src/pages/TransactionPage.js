@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { BASE_URL } from "../constants/urls.js";
@@ -11,6 +11,12 @@ export default function TransactionsPage() {
   });
   const { tipo } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("userAuth");
+    if (!token) return navigate("/");
+  },[navigate])
+
 
   function handleChange(e) {
     const field = e.target.name;
