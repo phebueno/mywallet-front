@@ -133,7 +133,7 @@ const TransactionsContainer = styled.article`
   flex-direction: column;
   justify-content: space-between;
   ul{
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height:350px;
   }
   

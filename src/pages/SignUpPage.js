@@ -32,7 +32,8 @@ export default function SignUpPage() {
           navigate("/");
         })
         .catch((err) => {
-          console.log(err.response.data);
+          console.log(err.response);
+          alert(err.response.data);
         });
     }
   }

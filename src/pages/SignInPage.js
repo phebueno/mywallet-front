@@ -29,7 +29,8 @@ export default function SignInPage() {
         navigate("/home");
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err.response);
+        alert(err.response.data);
       });
   }
 
