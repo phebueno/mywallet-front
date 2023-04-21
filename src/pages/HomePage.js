@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants/urls.js";
 import axios from "axios";
 import Transaction from "../components/Transaction.js";
-//import Transactions from "../components/Transactions.js";
 
 export default function HomePage() {
   const [listaTransacoes, setListaTransacoes] = useState([]);
@@ -33,14 +32,12 @@ export default function HomePage() {
     axios
       .get(url, config)
       .then((res) => {
-        console.log(res.data);
         setListaTransacoes(res.data.opsUser);
         setUser(res.data.user);
-        let initialValue = 0;
         const saldoTotal = res.data.opsUser.reduce(
           (accumulator, transacaoAtual) =>
             somarSaldo(accumulator, transacaoAtual),
-          initialValue
+          0
         );
         setSaldo(saldoTotal);
       })
@@ -49,11 +46,16 @@ export default function HomePage() {
       });
   }, [navigate]);
 
+  function logout(){
+    localStorage.removeItem("userAuth");
+    navigate("/");
+  }
+
   return (
     <HomeContainer>
       <Header>
         <h1>Olá, {user}</h1>
-        <BiExit />
+        <BiExit onClick={logout}/>
       </Header>
       <TransactionsContainer>
         <ul>
@@ -79,13 +81,13 @@ export default function HomePage() {
       </TransactionsContainer>
 
       <ButtonsContainer>
-        <button>
+        <button onClick={()=>navigate("/nova-transacao/entrada")}>
           <AiOutlinePlusCircle />
           <p>
             Nova <br /> entrada
           </p>
         </button>
-        <button>
+        <button onClick={()=>navigate("/nova-transacao/saida")}>
           <AiOutlineMinusCircle />
           <p>
             Nova <br />
@@ -130,6 +132,7 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: scroll;
   article {
     display: flex;
     justify-content: space-between;

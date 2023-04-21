@@ -15,7 +15,6 @@ export default function SignInPage() {
   function handleChange(e) {
     setLoginUsuario({ ...loginUsuario, [e.target.name]: e.target.value });
   }
-
   function signin(e) {
     e.preventDefault();
     const url = `${BASE_URL}/sign-in`;
