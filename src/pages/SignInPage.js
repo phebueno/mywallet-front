@@ -41,13 +41,15 @@ export default function SignInPage() {
           placeholder="E-mail"
           type="email"
           name="email"
+          value={loginUsuario.name}
           onChange={handleChange}
         />
         <input
           placeholder="Senha"
           type="password"
-          autocomplete="new-password"
+          autoComplete="new-password"
           name="password"
+          value={loginUsuario.password}
           onChange={handleChange}
         />
         <button>Entrar</button>

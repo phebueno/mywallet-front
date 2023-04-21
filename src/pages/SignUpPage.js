@@ -45,26 +45,30 @@ export default function SignUpPage() {
           placeholder="Nome"
           type="text"
           name="name"
+          value={cadastroUsuario.name}
           onChange={handleChange}
         />
         <input
           placeholder="E-mail"
           type="email"
           name="email"
+          value={cadastroUsuario.email}
           onChange={handleChange}
         />
         <input
           placeholder="Senha"
           type="password"
-          autocomplete="new-password"
+          autoComplete="new-password"
           name="password"
+          value={cadastroUsuario.password}
           onChange={handleChange}
         />
         <input
           placeholder="Confirme a senha"
           type="password"
-          autocomplete="new-password"
+          autoComplete="ref-new-password"
           name="refpassword"
+          value={cadastroUsuario.refpassword}
           onChange={handleChange}
         />
         <button>Cadastrar</button>
