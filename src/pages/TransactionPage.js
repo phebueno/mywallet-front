@@ -9,7 +9,7 @@ export default function TransactionsPage() {
   const location = useLocation();
   const { tipo } = useParams();
   const [transacao, setTransacao] = useState({
-    value: location.state ? location.state.value.toFixed(2) : "",
+    value: location.state ? Number(location.state.value.toFixed(2)) : "",
     description: location.state ? location.state.description : ""
   });
 
