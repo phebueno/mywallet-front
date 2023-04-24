@@ -43,10 +43,10 @@ export default function TransactionsPage() {
       },
     };
 
-    const url = `${BASE_URL}/nova-transacao/${tipo}`;
+    const url = `${BASE_URL}/nova-transacao`;
 
     axios
-      .post(url, transacao, config)
+      .post(url, { ...transacao, type:tipo }, config)
       .then((res) => {
         console.log(res.data);
         navigate("/home");

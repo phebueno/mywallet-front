@@ -57,7 +57,7 @@ export default function HomePage() {
     <HomeContainer>
       <Header>
         <h1>Olá, {user}</h1>
-        <BiExit onClick={logout}/>
+        <BiExitStyle onClick={logout}/>
       </Header>
       <TransactionsContainer>
         <ul>
@@ -171,4 +171,7 @@ const Value = styled.div`
   font-size: 16px;
   text-align: right;
   color: ${(props) => (props.color === "entrada" ? "green" : "red")};
+`;
+const BiExitStyle = styled(BiExit)`
+cursor:pointer;
 `;
