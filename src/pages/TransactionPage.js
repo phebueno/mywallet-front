@@ -1,21 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { BASE_URL } from "../constants/urls.js";
 
 export default function TransactionsPage() {
-  const [transacao, setTransacao] = useState({
-    value: "",
-    description: "",
-  });
-  const { tipo } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { tipo } = useParams();
+  const [transacao, setTransacao] = useState({
+    value: location.state ? location.state.value.toFixed(2) : "",
+    description: location.state ? location.state.description : ""
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("userAuth");
     if (!token) return navigate("/");
-  },[navigate])
+    if (tipo!=='entrada' && tipo!=='saida') return navigate("/");
+  },[navigate, tipo])
 
 
   function handleChange(e) {
@@ -31,6 +33,33 @@ export default function TransactionsPage() {
     }
   }
 
+  function editTransacao(e){
+    e.preventDefault();
+
+    const token = localStorage.getItem("userAuth");
+    if (!token) return navigate("/");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    };
+    
+
+    const url = `${BASE_URL}/editar-transacao/${location.state.idTransacao}`;
+
+    axios
+      .put(url, { ...transacao, type:tipo }, config)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert(err.response.data);
+      });
+  }
+
   function addTransacao(e) {
     e.preventDefault();
 
@@ -42,6 +71,7 @@ export default function TransactionsPage() {
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
     };
+    
 
     const url = `${BASE_URL}/nova-transacao`;
 
@@ -59,8 +89,8 @@ export default function TransactionsPage() {
 
   return (
     <TransactionsContainer>
-      <h1>Nova {tipo}</h1>
-      <form onSubmit={addTransacao}>
+      <h1>{location.state ? "Editar" : "Nova"} {tipo}</h1>
+      <form onSubmit={location.state ? editTransacao : addTransacao}>
         <input
           placeholder="Valor"
           type="number"
@@ -76,7 +106,7 @@ export default function TransactionsPage() {
           value={transacao.description}
           onChange={handleChange}
         />
-        <button>Salvar {tipo}</button>
+        <button>{location.state ? "Atualizar" : "Salvar"} {tipo}</button>
       </form>
     </TransactionsContainer>
   );

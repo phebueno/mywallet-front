@@ -37,7 +37,7 @@ export default function Transaction({ transacao, setListaTransacoes, listaTransa
     <ListItemContainer>
       <div>
         <span>{opDate}</span>
-        <strong>{description}</strong>
+        <strong onClick={()=>navigate(`/editar-transacao/${type}`, {state:{idTransacao,value,description}})}>{description}</strong>
       </div>
       <div>
         <Value color={type}>
@@ -61,6 +61,9 @@ const ListItemContainer = styled.li`
   margin-bottom: 8px;
   color: #000000;
   margin-right: 10px;
+  strong{
+    cursor:pointer;
+  }
   div {
     display: flex;
     gap: 10px;
