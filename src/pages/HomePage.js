@@ -8,10 +8,12 @@ import axios from "axios";
 import Transaction from "../components/Transaction.js";
 
 export default function HomePage() {
-  const [listaTransacoes, setListaTransacoes] = useState([]);
+  const [listaTransacoes, setListaTransacoes] = useState({data:"",update:false});
   const [saldo, setSaldo] = useState(0);
   const [user, setUser] = useState();
   const navigate = useNavigate();
+
+  
 
   function somarSaldo(accumulator, transacaoAtual) {
     let sinal = transacaoAtual.type === "entrada" ? 1 : -1;
@@ -32,7 +34,7 @@ export default function HomePage() {
     axios
       .get(url, config)
       .then((res) => {
-        setListaTransacoes(res.data.opsUser);
+        setListaTransacoes({"data":res.data.opsUser, "update":false});
         setUser(res.data.user);
         const saldoTotal = res.data.opsUser.reduce(
           (accumulator, transacaoAtual) =>
@@ -44,7 +46,7 @@ export default function HomePage() {
       .catch((err) => {
         console.log(err.response.data);
       });
-  }, [navigate]);
+  }, [navigate, listaTransacoes.update]);
 
   function logout(){
     localStorage.removeItem("userAuth");
@@ -59,9 +61,9 @@ export default function HomePage() {
       </Header>
       <TransactionsContainer>
         <ul>
-          {listaTransacoes.length !== 0 ? (
-            listaTransacoes.map((transacao, index) => (
-              <Transaction key={index} transacao={transacao} />
+          {listaTransacoes.data.length !== 0 ? (
+            listaTransacoes.data.map((transacao, index) => (
+              <Transaction key={index} transacao={transacao} setListaTransacoes={setListaTransacoes} listaTransacoes={listaTransacoes}/>
             ))
           ) : (
             <Aviso>Não há registro de entrada ou saída</Aviso>

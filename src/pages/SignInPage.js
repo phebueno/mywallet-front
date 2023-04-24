@@ -22,7 +22,6 @@ export default function SignInPage() {
     axios
       .post(url, loginUsuario)
       .then((res) => {
-        console.log(res.data);
         //Cria sessão com armazenamento local
         const dadosSerializados = JSON.stringify(res.data); // String '{"nome":"Pedro","idade":30}'
         localStorage.setItem("userAuth", dadosSerializados);
