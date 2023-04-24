@@ -59,7 +59,7 @@ export default function TransactionsPage() {
 
   return (
     <TransactionsContainer>
-      <h1>Nova TRANSAÇÃO</h1>
+      <h1>Nova {tipo}</h1>
       <form onSubmit={addTransacao}>
         <input
           placeholder="Valor"
@@ -76,7 +76,7 @@ export default function TransactionsPage() {
           value={transacao.description}
           onChange={handleChange}
         />
-        <button>Salvar TRANSAÇÃO</button>
+        <button>Salvar {tipo}</button>
       </form>
     </TransactionsContainer>
   );
