@@ -1,16 +1,21 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import MyWalletLogo from "../components/MyWalletLogo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../constants/urls.js";
 import axios from "axios";
 
-export default function SignInPage() {
+export default function SignInPage({setUser}) {
   const [loginUsuario, setLoginUsuario] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token = localStorage.getItem("userAuth");
+    if (token) return navigate("/home");
+  })
 
   function handleChange(e) {
     setLoginUsuario({ ...loginUsuario, [e.target.name]: e.target.value });
@@ -18,13 +23,14 @@ export default function SignInPage() {
   function signin(e) {
     e.preventDefault();
     const url = `${BASE_URL}/sign-in`;
-
     axios
       .post(url, loginUsuario)
       .then((res) => {
         //Cria sessão com armazenamento local
-        const dadosSerializados = JSON.stringify(res.data); // String '{"nome":"Pedro","idade":30}'
+        const {user,token} = res.data;
+        const dadosSerializados = JSON.stringify(token); 
         localStorage.setItem("userAuth", dadosSerializados);
+        setUser(user);
         navigate("/home");
       })
       .catch((err) => {

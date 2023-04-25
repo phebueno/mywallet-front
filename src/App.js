@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
 import HomePage from "./pages/HomePage"
@@ -6,13 +7,14 @@ import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
 
 export default function App() {
+  const [user, setUser] = useState();
   return (
     <PagesContainer>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignInPage />} />
+          <Route path="/" element={<SignInPage setUser={setUser}/>} />
           <Route path="/cadastro" element={<SignUpPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/home" element={<HomePage user={user} setUser={setUser}/>} />
           <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
           <Route path="/editar-transacao/:tipo" element={<TransactionsPage />} />
         </Routes>

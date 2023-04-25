@@ -7,13 +7,10 @@ import { BASE_URL } from "../constants/urls.js";
 import axios from "axios";
 import Transaction from "../components/Transaction.js";
 
-export default function HomePage() {
+export default function HomePage({user, setUser}) {
   const [listaTransacoes, setListaTransacoes] = useState({data:"",update:false});
   const [saldo, setSaldo] = useState(0);
-  const [user, setUser] = useState();
-  const navigate = useNavigate();
-
-  
+  const navigate = useNavigate();  
 
   function somarSaldo(accumulator, transacaoAtual) {
     let sinal = transacaoAtual.type === "entrada" ? 1 : -1;
@@ -29,7 +26,6 @@ export default function HomePage() {
         Authorization: `Bearer ${JSON.parse(token)}`,
       },
     };
-
     const url = `${BASE_URL}/transacoes`;
     axios
       .get(url, config)
@@ -46,7 +42,7 @@ export default function HomePage() {
       .catch((err) => {
         console.log(err.response.data);
       });
-  }, [navigate, listaTransacoes.update]);
+  }, [navigate, listaTransacoes.update, setUser]);
 
   function logout(){
     localStorage.removeItem("userAuth");
@@ -56,7 +52,7 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, {user}</h1>
+        <h1>{user && `Olá, ${user}`}</h1>
         <BiExitStyle onClick={logout}/>
       </Header>
       <TransactionsContainer>
