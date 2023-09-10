@@ -6,7 +6,7 @@ Teste à vontade no seguinte link: https://mywallet-front-wheat.vercel.app/
 
 ## Sobre
 
-Este é o front-end de uma aplicação web com interface simplpes e intuitiva para o controle de despesas, que são persistidas em banco de dados com o uso de uma API cujo repositório está indicado mais adiante. Nele, temos opções disponíveis para o usuário:
+Este é o front-end de uma aplicação web com interface simples e intuitiva para o controle de despesas, que são persistidas em banco de dados com o uso de uma API cujo repositório está indicado mais adiante. Nele, temos opções disponíveis para o usuário:
 
 - Sign Up
 - Login
