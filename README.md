@@ -1,9 +1,11 @@
 # My Wallet
 
 Um aplicativo financeiro para o controle de gastos. Faça lançamentos e calcule automaticamente suas finanças!
- 
-![landingPage](landingPage.PNG)
-![landingPage](main.PNG)
+
+<p align="center">
+  <img src="landingPage.PNG?raw=true" alt="landing page"/>
+  <img src="main.PNG?raw=true" alt="main page"/>
+</p>
 
 Teste à vontade no seguinte link: https://mywallet-front-wheat.vercel.app/
 
