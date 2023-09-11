@@ -13,6 +13,9 @@ Este é o front-end de uma aplicação web com interface simples e intuitiva par
 - Adição e deleção de despesas
 - Cálculos de despesas totais
 
+Próximas features a serem desenvolvidas
+- Completo front-end com interface para uso do aplicativo
+
 ## Tecnologias
 Foram utilizadas as seguintes ferramentas para a construção deste app:<br>
 <p>
